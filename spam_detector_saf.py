@@ -1,4 +1,4 @@
-'''In this project the train, valid, and test datasets are provided
+'''The difference between the validation, test, and train sets is very confusing. In this project the train, valid, and test datasets are provided
 hence no need for train_test_split. The project uses files from sklearn
 to train different ML algorithms. The validation dataset is used to determine
 the most accurate algorithm which is then applied on the test dataset.'''
