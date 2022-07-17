@@ -10,12 +10,14 @@ plt.scatter(df['Age'],df['Income($)'])
 plt.xlabel('Age')
 plt.ylabel('Income')
 
+#Scale the dataset to avoid bias as a result of large units.
 df['Age']=mms().fit_transform(df[['Age']])
 df['Income($)']=mms().fit_transform(df[['Income($)']])
 plt.scatter(df['Age'],df['Income($)'])
 plt.xlabel('Scaled_Age')
 plt.ylabel('Scaled_Income($)')
 
+#Create an elbow plot to determine the optimum value of K.
 Mean_Square_Error=[]
 for k in range(1,11):
     x=km(n_clusters=k)
@@ -26,6 +28,7 @@ plt.xlabel('k')
 plt.ylabel('Sum of Mean Square Error')
 plt.plot(k_range,Mean_Square_Error)
 
+#Predict the clusters and visualize the result using scatter plots.
 df['Cluster']=km(n_clusters=3).fit_predict(df[['Age','Income($)']])
 df1=df[df.Cluster==0]
 df2=df[df.Cluster==1]
