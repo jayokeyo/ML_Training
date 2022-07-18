@@ -15,11 +15,13 @@ print(x)
 data_scaled = pd.DataFrame(normalize(data),columns=data.columns)
 print(data_scaled)
 
-#Create a grid for ploting the dendrogram.
-plt.figure(figsize=(10,7))
+fig=plt.figure(figsize=(10,14))
+
+#Create a subplot for the dendrogram.
+fig.add_subplot(2,1,1)
 plt.title('Dendograms')
 
-#Plot the dendrogram within the grid.
+#Plot the dendrogram.
 dend = shc.dendrogram(shc.linkage(data_scaled,method='ward'))
 #Draw a dotted line to mark the point delimiting the clusters.
 plt.axhline(y=6,color='r',linestyle='--')
@@ -29,6 +31,7 @@ cluster = AC(n_clusters=2,affinity='euclidean',linkage='ward')
 fit_data = pd.DataFrame(cluster.fit_predict(data_scaled))
 print(fit_data)
 
-#Use two columns to visualize the clusters and how they are distributed.
-plt.figure(figsize=(10,7))
+#Scatter plot.
+fig.add_subplot(2,1,2)
 plt.scatter(data_scaled['Milk'],data_scaled['Grocery'],c=cluster.labels_)
+plt.title('Scatter Plot')
