@@ -27,12 +27,16 @@ crime.describe()
 crime.isnull().sum()
 fig.add_subplot(5,2,1)
 crime.groupby('State')['Murder'].max().plot(kind='bar')
+plt.title('Murder per State')
 fig.add_subplot(5,2,2)
 crime.groupby('State')['Assault'].max().plot(kind='bar')
+plt.title('Assault per State')
 fig.add_subplot(5,2,3)
 crime.groupby('State')['Rape'].max().plot(kind='bar')
+plt.title('Rape per State')
 fig.add_subplot(5,2,4)
 crime.groupby('State')['UrbanPop'].max().plot(kind='bar')
+plt.title('Urban Population per State')
 
 data = crime.iloc[:,1:].values
 
