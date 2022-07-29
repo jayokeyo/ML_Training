@@ -15,6 +15,7 @@ from sklearn.metrics import confusion_matrix, classification_report
 train = pd.read_csv('train.csv')
 test = pd.read_csv('test.csv')
 valid = pd.read_csv('valid.csv')
+Unseen = pd.read_csv('Unseen.csv')
 Accuracy_Score = {}
 Classifier = [SVC,MultinomialNB,LogisticRegression,DecisionTreeClassifier]
 
@@ -35,7 +36,7 @@ Accuracy = model.score(valid['text'],valid['label'])
 print('Accuracy on validation data = ',Accuracy)
 
 if Accuracy > 0.85:
-    most_accurate.fit(test['text'],test['label'])
+    model.fit(train['text'],train['label'])
     test['predicted label'] = most_accurate.predict(test['text'])
 
 print(Accuracy_Score)
@@ -44,3 +45,6 @@ mat = confusion_matrix(test['label'],test['predicted label'])
 print(mat)
 report = classification_report(test['label'],test['predicted label'])
 print(report)
+
+Unseen['predicted label'] = most_accurate.predict(Unseen['text'])
+print(Unseen)
