@@ -14,30 +14,31 @@ train = pd.read_csv('train.csv')
 test = pd.read_csv('test.csv')
 valid = pd.read_csv('valid.csv')
 Accuracy_Score = {}
-z_train = train['text']
-y_train = train['label']
-z_test = test['text']
-y_test = test['label']
-z_valid = valid['text']
-y_valid = valid['label']
 Classifier = [SVC,MultinomialNB,LogisticRegression,DecisionTreeClassifier]
+
 cv = CountVectorizer()
-features = cv.fit_transform(z_train)
+features = cv.fit_transform(train['text'])
+features_valid = cv.fit_transform(valid['text'])
+features_test = cv.fit_transform(test['text'])
 
 highest_accuracy = 0
 
 for classifier in Classifier:
     model = classifier()
-    model.fit(features,y_train)
-    features_valid = cv.transform(z_valid)
-    Accuracy = round(model.score(features_valid,y_valid),5)*100
+    model.fit(features,train['label'])
+    Accuracy = model.score(features,train['label'])
     Accuracy_Score[str(model)] = Accuracy
     if Accuracy > highest_accuracy:
         highest_accuracy = Accuracy
         most_accurate = model
 
-most_accurate.fit(features,y_train)
-features_test = cv.transform(z_test)
-Accuracy = most_accurate.score(features_test,y_test)*100
+most_accurate.fit(features_valid,valid['label'])
+Accuracy = model.score(features_valid,valid['label'])
+print('Accuracy on validation data = ',Accuracy)
+
+if Accuracy > 0.85:
+    most_accurate.fit(features_test,test['label'])
+    test['predicted label'] = most_accurate.predict(features_test)
+
 print(Accuracy_Score)
-print ('Most accurate classifier is ',most_accurate , ': Accuracy = ',round(Accuracy,5),'% on the test dataset')
+print(test)
