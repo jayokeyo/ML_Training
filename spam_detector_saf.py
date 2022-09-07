@@ -37,7 +37,7 @@ print('Accuracy on validation data = ',Accuracy)
 print()
 
 #Testing the model.
-if Accuracy > 0.85:
+if highest_accuracy > 0.85:
     model.fit(train['text'],train['label'])
     test['predicted label'] = most_accurate.predict(test['text'])
 
